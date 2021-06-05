@@ -104,8 +104,151 @@ print(dic_data)
 
 # # 1.2.4 Conditional Statements and iteration
 
+# if문
+findvalue = 5
+if findvalue in data_list:
+    print('{0}은 들어 있습니다.'.format(findvalue))
+else:
+    pnt('{0}은 들어 있지 않습니다.'.format(findvalue))
+print('여기서부터는 if 문과 관계없이, 반드시 표시됩니다.')
+
+# 1. {0}은 무슨 뜻인가?
+# 2. .format()는 무엇인가?
+#     - {0}은 format() method의 첫 번째 인수를 의미한다
+# 3. 추리해보자면, 저 안에 뒤에있는 것이 들어간다는 것으로 보이는데, 왜 저런 방법을 사용했는가?
+#     - 서식을 정해서 출력하고 싶을 때 사용한다고 한다
+# 4. 만약 변수가 여러개면 어떻게 되는가?
+#     - {0}, {1}, ... 와 format(findvalue, findvalue, ...) 등으로 여러 개 표현이 가능하다
+#     - 혹은 {} {} 으로 표시하면, 순서대로 나온다.
+#     - format(findvalue = 5) 등 method 내에서 변수 선언이 가능하다
+# 5. 다른 방식으로 표현하는 방법은 없는가?
+#     - {:6s}, {07d:0}, {0:^09d}, 등 공백 혹은 문자열을 앞 뒤로 넣을 수 있다.
+#     - 세 번째는 0번째의 변수를 가운데 정렬한다는 의미가 추가되었다.
+#     - %d 방식은 오래된 방식이라 없어질 가능성이 농후하다...!
+
+findvalue = 3
+if findvalue in data_list:
+    print('{0}은 들어 있습니다.'.format(findvalue))
+else:
+    pirnt('{0}은 들어 있지 않습니다.'.format(findvalue))
+print('여기서부터는 if 문과 관계없이, 반드시 표시됩니다.')
+
+print('{0}와 {1}을 더하면 {2}입니다.'.format(2, 3, 5))
+
+# for문
+total = 0
+for num in [1, 2, 3]:
+    print('num: ', num)
+    total = total + num
+print('total: ', total)
+
+
+for dic_key in dic_data:
+    print(dic_key, dic_data[dic_key])
+
+for i in range(11):
+    print(i)
+
+for i in range(1, 11, 2):
+    print(i)
+
+for key, value in dic_data.items():
+    print(key, value)
+
+data_list1 = []
+data_list1 = [i * 2 for i in data_list]
+print(data_list1)
+
+data_list2 = []
+data_list2 = [i * 2 for i in data_list if i % 2 == 0]
+print(data_list2)
+
+for one, two in zip([1, 2, 3], [11, 12, 13]):
+    print(one, '과', two)
+
+# 1. one, two 대신 다른 숫자를 사용할 수 있는가?
+#     - three를 사용해도 두번째 것이 나온다
+# 2. 리스트를 여러 개 사용해도 되는가?
+#     - 세 번째 리스트를 삽입하자, 2개까지 expected 값이라며 에러가 뜬다
+
+# while문
+num = 1
+while num <= 10:
+    print(num)
+    num = num + 1
+print('마지막 값은 {0}입니다.'.format(num))
 
 
 # # 1.2.5 Function
 
+def calc_multi(a, b):
+    return a * b
+
+
+calc_multi(3, 10)
+
+
+def calc_fib(n):
+    if n == 1 or n == 2:
+        return 1
+    else:
+        return calc_fib(n - 1) + calc_fib(n - 2)
+
+
+print('피보나치 수: ', calc_fib(10))
+
+
+def calc_fib2(n):
+    if n > 2:
+        return calc_fib2(n - 2) + calc_fib2(n - 1)
+    else:
+        return 1
+
+
+calc_fib2(10)
+
+(lambda a ,b: a * b)(3, 10)
+
+
+def calc_double(x):
+    return x * 2
+
+
+for num in [1, 2, 3, 4]:
+    print(calc_double(num))
+
+list(map(calc_double, [1, 2, 3, 4]))
+
+list(map(lambda x: x * 2, [1, 2, 3, 4]))
+
+from functools import reduce
+
+reduce(lambda sum, x: sum + x, [1, 2, 3, 4], 0)
+
+list(filter(lambda x: x % 2 == 0, [1, 2, 3, 4]))
+
+# 연습 문제 1-1
+string = 'Hello, Data Science!'
+for i in range(len(string)):
+    print(string[i])
+
+# 연습 문제 1-2
+sum = 0
+for i in range(1, 51):
+    sum = sum + i
+    i += 1
+print("1부터 50까지의 합은 ", sum)
+
 # # 1.2.6 Class and Instance
+
+
+
+
+
+
+
+
+
+
+
+
