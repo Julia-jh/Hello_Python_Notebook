@@ -227,6 +227,13 @@ reduce(lambda sum, x: sum + x, [1, 2, 3, 4], 0)
 
 list(filter(lambda x: x % 2 == 0, [1, 2, 3, 4]))
 
+a = list(map(lambda x: x ** 2, range(5)))
+print(a)
+b = reduce(lambda x, y: x + y, [0, 1, 2, 3, 4])
+print(b)
+c = list(filter(lambda x: x < 5, range(10)))
+print(c)
+
 # 연습 문제 1-1
 string = 'Hello, Data Science!'
 for i in range(len(string)):
