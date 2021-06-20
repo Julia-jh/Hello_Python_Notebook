@@ -389,9 +389,11 @@ M_G1_sorted_cumratio = M_G1_sorted.cumsum() / M_G1_sorted.sum()
 plt.plot(F_num, F_G1_sorted_cumratio, label = 'F', color = 'green')
 plt.plot(M_num, M_G1_sorted_cumratio, label = 'M', color = 'yellow')
 
+plt.xlabel('cumulative population ratio')
+plt.ylabel('GI cumulative ratio')
 plt.legend()
 plt.grid(True)
-# -
+# +
 # 종합문제 3-2-2
 # 불평등 정도를 수치로 나타낸 것을 지니 계수라고 한다
 # 지니계수값은 로렌츠 곡선과 45도 선으로 둘러싸인 부분의 면적의 2배로 정의 되며, 0에서 1사이의 값이다
