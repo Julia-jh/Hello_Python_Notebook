@@ -354,15 +354,8 @@ wine_describe
 
 # ls
 
-wine_col = wine.columns
-wine_col
-
 # 종합문제 3-1-2
 sns.pairplot(wine[wine.columns])
-plt.grid(True)
-
-# 종합문제 3-1-2
-sns.pairplot(wine[wine_col])
 plt.grid(True)
 
 # +
@@ -377,29 +370,32 @@ plt.grid(True)
 student_data_math.head()
 
 # +
-s_d_m_f = student_data_math[student_data_math.sex == 'F']
-s_d_m_m = student_data_math[student_data_math.sex == 'M']
+# 학생성적을 성별 오름차순으로 정렬하기
+student_data_math_F = student_data_math[student_data_math.sex == 'F']
+student_data_math_M = student_data_math[student_data_math.sex == 'M']
 
-s_d_m_f_G1_sorted = s_d_m_f.G1.sort_values()
-s_d_m_m_G1_sorted = s_d_m_m.G1.sort_values()
+F_G1_sorted = student_data_math_F.G1.sort_values()
+M_G1_sorted = student_data_math_M.G1.sort_values()
 
-F_G1_sorted_cumratio = s_d_m_f_G1_sorted.cumsum() / s_d_m_f_G1_sorted.sum()
-M_G1_sorted_cumratio = s_d_m_m_G1_sorted.cumsum() / s_d_m_m_G1_sorted.sum()
+# 가로축의 인원의 누적 비율
+F_num = np.arange(len(F_G1_sorted)) / len(F_G1_sorted)
+M_num = np.arange(len(M_G1_sorted)) / len(M_G1_sorted)
 
-F_num = range((1, len(s_d_m_f_G1_sorted) + 1) / len(s_d_m_f_G1_sorted) + 1)
-M_num = range((1, len(s_d_m_m_G1_sorted) + 1) / len(s_d_m_m_G1_sorted) + 1)
+# 세로축의 1학기 성적 누적 비율
+F_G1_sorted_cumratio = F_G1_sorted.cumsum() / F_G1_sorted.sum()
+M_G1_sorted_cumratio = M_G1_sorted.cumsum() / M_G1_sorted.sum()
 
-
+# 각 그래프 그리기
 plt.plot(F_num, F_G1_sorted_cumratio, label = 'F', color = 'green')
 plt.plot(M_num, M_G1_sorted_cumratio, label = 'M', color = 'yellow')
 
 plt.legend()
 plt.grid(True)
 # -
-
-
-
-
-
-
+# 종합문제 3-2-2
+# 불평등 정도를 수치로 나타낸 것을 지니 계수라고 한다
+# 지니계수값은 로렌츠 곡선과 45도 선으로 둘러싸인 부분의 면적의 2배로 정의 되며, 0에서 1사이의 값이다
+# 값이 클수록 불평등 정도가 커진다
+# GI = sum of i(sum of j(abs((xi - xj)/(2*n**2*mean(x)))))
+# 남녀의 1학기 성적에 대한 지니 계수를 구하라
 

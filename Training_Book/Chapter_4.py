@@ -194,9 +194,9 @@ student_data_math.G1.plot(kind = 'kde', style = 'k--')
 student_data_math.G1.hist(density = True)
 plt.grid(True)
 # -
+# # 4. 4. 심화학습: 다차원확률분포
 
-
-
+# ## 4. 4. 1. 결합확률분포와 주변확률분포
 
 
 

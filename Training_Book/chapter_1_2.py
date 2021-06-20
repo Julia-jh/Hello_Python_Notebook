@@ -328,19 +328,6 @@ for i in range(2, 10 // 2 + 1):
     prime = [j for j in prime if (j == i or j % i != 0)]
 print(prime)
 
-# +
-a = range(2, 100)
-b = []
-for i in range(2, 10 // 2 + 1):
-    b = [j for j in a if (j == i or j % i != 0)]
-    break
-print(b)
-
-'''
-바꾸면 왜 안되는가? 더 알아보기..
-'''
-
-# +
 a = range(2, 101)
 b = []
 for i in a:
@@ -351,22 +338,6 @@ for i in a:
         elif i != j and i % j == 0:
             break
 print(b)
-
-'''
-바꾸면 왜 안되는가? 더 알아보기..
-'''
-# -
-
-10//2+1
-
-
-# 종합문제
-# 2. 위의 예제를 일반화해서, 자연수 N까지의 소수를 출력하는 함수를 작성하세요.
-def calc_prime(n):
-    prime = range(2, n + 1)
-    for i in range(2, n // 2 + 1):
-        prime = [j for j in prime if (j == i or j % i != 0)]
-    print(prime)
 
 
 # 종합문제
@@ -379,3 +350,17 @@ def calc_prime(n):
 
 
 calc_prime(100)
+
+# 더 알아보기   
+# - 왜 비어있는 것에 넣는것은 안되고, 이미 있는 것에서 시작해야 하는가?   
+# - 구체적으로 찾아야함: 수학모델링에서 실수하고 있는 것!   
+# 1) 나누는 수로 시작하지 않고, 나누어지는 수부터 시작했을 때 왜 안되는지 확인하기   
+# 2) 다른 방식으로 만들어보기!   
+
+a = range(2, 101)
+b = []
+for i in range(2, 10 // 2 + 1):
+    b = [j for j in a if (j == i or j % i != 0)]
+    break
+print(b)
+

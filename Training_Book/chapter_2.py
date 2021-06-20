@@ -608,6 +608,7 @@ plt.ylabel("Y")
 plt.grid(True)
 
 print("원 안의 점의 개수: ", count)
+print("원 밖의 점의 개수: ", 1000 - count)
 # -
 
 # 2장 종합문제

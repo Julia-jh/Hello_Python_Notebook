@@ -15,6 +15,23 @@
 # ---
 
 import numpy as np
+import numpy.random as random
+
+# +
+# 리스트 생성하기
+list_kind = int(input('리스트 종류를 선택해 주십시오 \n1. 랜덤 \n2. 순서대로 \n'))
+list_num = int(input('리스트의 갯수를 정해주십시오: '))
+
+data = np.arange(1, list_num + 1)
+if list_kind == 1:
+    random.shuffle(data)
+elif list_kind == 2:
+    data = data
+print('생성된 리스트입니다', data)
+
+# +
+# 인덱싱이랑 정렬 바꾸는 함수 만들기....언젠간....
+# -
 
 data = np.array([9, 2, 3, 4, 10, 6, 7, 8, 1, 5])
 data[::-1].sort()
