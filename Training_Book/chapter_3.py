@@ -39,10 +39,7 @@ from sklearn import linear_model
 
 # ## 3. 2. 1. 인터넷 등에 올라 있는 데이터를 읽어 들이기
 
-# +
-# 셸 명령어
-# pwd
-# -
+pwd
 
 # mkdir chap3
 
@@ -349,26 +346,56 @@ wine = pd.read_csv(url, sep = ';')
 wine.head()
 # -
 
+# 종합문제 3-1-1
 wine_describe = wine.describe()
 wine_describe.to_csv('wine_describe.csv')
+
+wine_describe
 
 # ls
 
 wine_col = wine.columns
 wine_col
 
+# 종합문제 3-1-2
+sns.pairplot(wine[wine.columns])
+plt.grid(True)
+
+# 종합문제 3-1-2
 sns.pairplot(wine[wine_col])
 plt.grid(True)
 
 # +
-# 종합문제 3-2
+# 종합문제 3-2-1
+# 1학기 수학 성적 데이터를 성별 오름차순으로 정렬하라
+# 가로축은 인원의 누적 비율
+# 세로축은 1학기 성적 누적 비율
+
+# 위의 곡선을 로렌츠 곡선이라고 한다
+# 로렌츠 곡선으로 성별로 나누어 1학기 수학성적으로 시각화하라
 # -
+student_data_math.head()
 
-sns.pairplot(wine[wine.columns])
+# +
+s_d_m_f = student_data_math[student_data_math.sex == 'F']
+s_d_m_m = student_data_math[student_data_math.sex == 'M']
+
+s_d_m_f_G1_sorted = s_d_m_f.G1.sort_values()
+s_d_m_m_G1_sorted = s_d_m_m.G1.sort_values()
+
+F_G1_sorted_cumratio = s_d_m_f_G1_sorted.cumsum() / s_d_m_f_G1_sorted.sum()
+M_G1_sorted_cumratio = s_d_m_m_G1_sorted.cumsum() / s_d_m_m_G1_sorted.sum()
+
+F_num = range((1, len(s_d_m_f_G1_sorted) + 1) / len(s_d_m_f_G1_sorted) + 1)
+M_num = range((1, len(s_d_m_m_G1_sorted) + 1) / len(s_d_m_m_G1_sorted) + 1)
+
+
+plt.plot(F_num, F_G1_sorted_cumratio, label = 'F', color = 'green')
+plt.plot(M_num, M_G1_sorted_cumratio, label = 'M', color = 'yellow')
+
+plt.legend()
 plt.grid(True)
-
-
-
+# -
 
 
 

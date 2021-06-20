@@ -109,7 +109,7 @@ findvalue = 5
 if findvalue in data_list:
     print('{0}은 들어 있습니다.'.format(findvalue))
 else:
-    pnt('{0}은 들어 있지 않습니다.'.format(findvalue))
+    print('{0}은 들어 있지 않습니다.'.format(findvalue))
 print('여기서부터는 if 문과 관계없이, 반드시 표시됩니다.')
 
 # 1. {0}은 무슨 뜻인가?
@@ -207,7 +207,10 @@ def calc_fib2(n):
 
 calc_fib2(10)
 
-(lambda a ,b: a * b)(3, 10)
+# https://dojang.io/mod/page/view.php?id=2360   
+# lambda, map, reduce, filter 정리한 것 *참고하기
+
+(lambda a, b: a * b)(3, 10)
 
 
 def calc_double(x):
@@ -326,18 +329,45 @@ for i in range(2, 10 // 2 + 1):
 print(prime)
 
 # +
-a = range(2, 11)
+a = range(2, 100)
 b = []
 for i in range(2, 10 // 2 + 1):
     b = [j for j in a if (j == i or j % i != 0)]
+    break
 print(b)
 
 '''
 바꾸면 왜 안되는가? 더 알아보기..
 '''
 
+# +
+a = range(2, 101)
+b = []
+for i in a:
+    for j in range(2, 101 // 2 + 1):
+        if i == j or i % j != 0:
+            b.append(i)
+            break
+        elif i != j and i % j == 0:
+            break
+print(b)
 
+'''
+바꾸면 왜 안되는가? 더 알아보기..
+'''
 # -
+
+10//2+1
+
+
+# 종합문제
+# 2. 위의 예제를 일반화해서, 자연수 N까지의 소수를 출력하는 함수를 작성하세요.
+def calc_prime(n):
+    prime = range(2, n + 1)
+    for i in range(2, n // 2 + 1):
+        prime = [j for j in prime if (j == i or j % i != 0)]
+    print(prime)
+
 
 # 종합문제
 # 2. 위의 예제를 일반화해서, 자연수 N까지의 소수를 출력하는 함수를 작성하세요.

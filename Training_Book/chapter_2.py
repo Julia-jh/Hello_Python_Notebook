@@ -59,7 +59,12 @@ print('정렬 후: ', data)
 data[::-1].sort()
 print('역정렬 후: ', data)
 
-np.sort(data)
+data = np.array([10, 9, 8, 7, 6, 5, 4, 3, 2, 1])
+data
+
+data = np.array([9, 2, 3, 4, 10, 6, 7, 8, 1, 5])
+data[::-1].sort()
+data
 
 # 통계값
 print('Min: ', data.min())
@@ -553,8 +558,59 @@ plt.subplots_adjust(left=0.125,
                     top=0.9, 
                     wspace=0.2, 
                     hspace=0.35)
+# -
+
+# 2장 종합문제
+# 1. 구간 [0, 1]에서 균등분포 따르는 난수를 두 번 발생 시켜, 각 10000개씩 생성해보자
+data_1 = np.random.uniform(0.0, 1.0, 10000)
+data_2 = np.random.uniform(0.0, 1.0, 10000)
 
 # +
 # 2장 종합문제
+# 2. x-y축에서 중심이 (0, 0)이고 반경 1인 원과 길이가 1인 정사각형을 생각해보자, 이때 x, y 조합으로 만든 난수 10000개 중
+# 원 내부에 들어가는 점은 몇 개인가?
+# 유클리드 놈: sqrt(x^2 + y^2)을 사용하여 길이를 구한다
+# 파이썬에서는 math.hypot(x, y)로 구할 수 있다
+# 원 안과 밖에 있는 점을 함께 그래프로 그려보자
+import math
+
+x = np.random.uniform(0.0, 1.0, 10000)
+y = np.random.uniform(0.0, 1.0, 10000)
+
+x_in = []
+y_in = []
+x_out = []
+y_out = []
+
+radius = 1
+count = 0
+
+for i in range(0, 10000):
+    dist = math.hypot(x[i], y[i])
+    if dist < radius:
+        count += 1
+        x_in.append(x[i])
+        y_in.append( y[i])
+    else:
+        x_out.append(x[i])
+        y_out.append(y[i])        
 
 
+plt.scatter(x_in, y_in, color = 'green')
+plt.scatter(x_out, y_out, color = 'blue')
+
+x_cir = np.arange(0, 1, 0.001)
+y_cir = np.sqrt(1-x_cir**2)
+plt.plot(x_cir, y_cir, color = 'red')
+
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.grid(True)
+
+print("원 안의 점의 개수: ", count)
+# -
+
+# 2장 종합문제
+# 3. 반경 1인 원의 면적 1/4과 길이 1인 정사각형의 면적 비율은 pi/4 : 1이 되는데,
+# 이 값과 위에서 구한 결과를 이용해 원주율을 구하라
+print("원주율: ", 4 * count / 10000)
