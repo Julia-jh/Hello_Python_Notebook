@@ -359,7 +359,7 @@ calc_prime(100)
 
 a = range(2, 101)
 b = []
-for i in range(2, 10 // 2 + 1):
+for i in range(2, 101 // 2 + 1):
     b = [j for j in a if (j == i or j % i != 0)]
     break
 print(b)

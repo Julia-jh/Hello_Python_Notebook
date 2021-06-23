@@ -103,9 +103,6 @@ plt.ylabel('count')
 # 그리드 추가
 plt.grid(True)
 # -
-
-
-
 # ## 3. 3. 2. 평균, 중앙값, 최빈값
 #
 
@@ -118,6 +115,9 @@ print('중앙값: ', student_data_math['absences'].median())
 
 # 최빈값: 가장 빈도가 많은 값
 print('최빈값: ', student_data_math['absences'].mode())
+# -
+
+# ## 3. 3. 3. 분산과 표준편차
 
 # +
 # 분산
@@ -185,6 +185,9 @@ plt.grid(True)
 # 공분산
 np.cov(student_data_math['G1'], student_data_math['G3'])
 
+# 공분산
+np.cov([student_data_math['G1'], student_data_math['G2'], student_data_math['G3']])
+
 # 분산
 print('G1의 분산: ', student_data_math['G1'].var())
 print('G3의 분산: ', student_data_math['G3'].var())
@@ -200,6 +203,9 @@ sp.stats.kendalltau(student_data_math['G1'], student_data_math['G3'])
 
 # 상관행렬
 np.corrcoef([student_data_math['G1'], student_data_math['G3']])
+
+# 상관행렬
+np.corrcoef([student_data_math['G1'], student_data_math['G2'], student_data_math['G3']])
 
 # ## 3. 3. 8. 모든 변수의 히스토그램과 산점도 그리기
 
@@ -226,6 +232,12 @@ student_data
 # 연습문제 3-3
 sns.pairplot(student_data[['Medu', 'Fedu', 'G3_math']])
 plt.grid(True)
+
+# 연습문제 3-3
+sns.pairplot(student_data[['Medu', 'Fedu']])
+plt.grid(True)
+
+help(sns.pairplot)
 
 # # 3. 4. 단순회귀분석
 
@@ -374,8 +386,8 @@ student_data_math.head()
 student_data_math_F = student_data_math[student_data_math.sex == 'F']
 student_data_math_M = student_data_math[student_data_math.sex == 'M']
 
-F_G1_sorted = student_data_math_F.G1.sort_values()
-M_G1_sorted = student_data_math_M.G1.sort_values()
+F_G1_sorted = student_data_math_F.G1.sort_values().reset_index(drop=True)
+M_G1_sorted = student_data_math_M.G1.sort_values().reset_index(drop=True)
 
 # 가로축의 인원의 누적 비율
 F_num = np.arange(len(F_G1_sorted)) / len(F_G1_sorted)
@@ -401,3 +413,105 @@ plt.grid(True)
 # GI = sum of i(sum of j(abs((xi - xj)/(2*n**2*mean(x)))))
 # 남녀의 1학기 성적에 대한 지니 계수를 구하라
 
+# 분모
+den_F = 2 * (len(F_G1_sorted) ** 2) * np.mean(F_G1_sorted)
+den_M = 2 * (len(M_G1_sorted) ** 2) * np.mean(M_G1_sorted)
+
+def num_x(x):
+    num_x = []
+    for i in range(0, len(x)):
+        for j in range(0, len(x)):
+            num_x.append(abs(x[i] - x[j]))
+    return sum(num_x)
+        
+# 분자
+num_F = []
+for i in range(0, len(F_G1_sorted)):
+    for j in range(0, len(F_G1_sorted)):
+        num_F.append(abs(F_G1_sorted[i] - F_G1_sorted[j]))
+
+num_M = []
+for i in range(0, len(M_G1_sorted)):
+    for j in range(0, len(M_G1_sorted)):
+        num_M.append(abs(M_G1_sorted[i] - M_G1_sorted[j]))
+
+GI_F = sum(num_F) / den_F
+GI_M = sum(num_M) / den_M
+
+print('여학생의 지니계수: ',GI_F)
+print('남학생의 지니계수: ',GI_M)
+# -
+
+# ## 나중에 더 해본 문제들!
+
+# 심심해서 해봄.. 되나 싶어가지고...
+x = student_data_math.index
+y = student_data_math['sex'].isin(['F'])
+plt.scatter(x[y == True], y[y == True], color = 'green')
+plt.scatter(x[y == False], y[y == False], color = 'blue')
+
+# +
+# 학생성적을 성별 오름차순으로 정렬하기
+# 모양이 예쁘지는 않지만, 어디까지 되나 확인해보려고 해봄
+# groupby(x)로 나눈 다음에, get_group(y)을 하면 x에서 y인 값을 추출할 수 있다
+# 마찬가지로 그 중에서, ['G1']을 따로 추출할 수 있는데(이때 시리즈로 추출됨)
+# ['G1']을 groupby뒤에 넣어도 되고, get_group 뒤에 넣어도 실행이 된다
+# 값을 기준으로 정렬하고 싶을 때는 sort_values()를 사용한다
+# 인덱스를 리셋해주는 것이, 나중에 인덱스를 활용하기에 좋다
+student_data_math_F = student_data_math.groupby('sex')['G1'].get_group('F').sort_values().reset_index(drop=True)
+student_data_math_M = student_data_math.groupby('sex')['G1'].get_group('M').sort_values().reset_index(drop=True)
+
+# 가로축의 인원의 누적 비율
+# 인덱스를 활용해서 만들어봄
+# 너무 길어짐..
+num_F = []
+for i in range(0, len(student_data_math_F)):
+    num_F.append((student_data_math_F.index[i] + 1) / (student_data_math_F.index.max() + 1))
+
+num_M = []
+for i in range(0, len(student_data_math_M)):
+    num_M.append((student_data_math_M.index[i] + 1) / (student_data_math_M.index.max() + 1))
+
+# 세로축의 1학기 성적 누적 비율
+F_G1_sorted_cumratio = F_G1_sorted.cumsum() / F_G1_sorted.sum()
+M_G1_sorted_cumratio = M_G1_sorted.cumsum() / M_G1_sorted.sum()
+
+# 각 그래프 그리기
+plt.plot(F_num, F_G1_sorted_cumratio, label = 'F', color = 'green')
+plt.plot(M_num, M_G1_sorted_cumratio, label = 'M', color = 'yellow')
+
+plt.xlabel('cumulative population ratio')
+plt.ylabel('GI cumulative ratio')
+plt.legend()
+plt.grid(True)
+
+
+# +
+# 종합문제 3-2-2
+# 불평등 정도를 수치로 나타낸 것을 지니 계수라고 한다
+# 지니계수값은 로렌츠 곡선과 45도 선으로 둘러싸인 부분의 면적의 2배로 정의 되며, 0에서 1사이의 값이다
+# 값이 클수록 불평등 정도가 커진다
+# GI = sum of i(sum of j(abs((xi - xj)/(2*n**2*mean(x)))))
+# 남녀의 1학기 성적에 대한 지니 계수를 구하라
+
+# 위에서 하다보니, 두 번 쓰지 않고 활용하 수 있을 것이라고 생각함
+# 분모와 분자를 따로 구했다
+# 추출한 DF는 활용에 좋기 위해 인덱스를 꼭 리셋하자!!!
+
+def GI(x):
+
+    # 분모
+    def den_x(x):
+        return 2 * (len(x) ** 2) * np.mean(x)
+
+    # 분자
+    def num_x(x):
+        num_x = []
+        for i in range(0, len(x)):
+            for j in range(0, len(x)):
+                num_x.append(abs(x[i] - x[j]))
+        return sum(num_x)
+    return num_x(x) / den_x(x)
+
+print('여학생의 지니계수: ', GI(F_G1_sorted))
+print('남학생의 지니계수: ', GI(M_G1_sorted))

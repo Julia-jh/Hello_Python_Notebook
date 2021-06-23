@@ -66,6 +66,27 @@ data = np.array([9, 2, 3, 4, 10, 6, 7, 8, 1, 5])
 data[::-1].sort()
 data
 
+da = np.array([(1,9,3), (4,8,6)])
+da
+
+da.sort(axis = 0)
+da
+
+da = np.array([[(1,9,3), (4,8,6)], [(4,9,2), (6,7,3)]])
+print(da.shape, '\n', da.ndim, '\n', da)
+
+da = np.array([[[1,9,3], [4,8,6]], [[4,9,2], [6,7,3]]])
+print(da.shape, '\n', da.ndim, '\n', da)
+
+da = np.array((((1,9,3), (4,8,6)), ((4,7,2), (6,5,3))))
+print(da.shape, '\n', da.ndim, '\n', da)
+
+da.sort()
+da
+
+da.sort(axis = 0)
+da
+
 # 통계값
 print('Min: ', data.min())
 print('Max: ', data.max())
@@ -86,7 +107,14 @@ print('10개의 난수 배열: ', rnd_data)
 print('복원 추출: ', random.choice(data, 10))
 print('비복원 추출: ', random.choice(data, 10, replace = False))
 
-# - random.seed(): 괄호 안의 숫자를 0 이상의 정수를 넣으면 고정, 비워두면 비고정, 음수 혹은 소수점 아래를 넣으면 에러
+random.seed(1)
+rnd_data = random.rand(10)
+print('10개의 난수 배열: ', rnd_data)
+print('복원 추출: ', random.choice(data, 10))
+print('비복원 추출: ', random.choice(data, 10, replace = False))
+
+# - random.seed(): 괄호 안의 숫자를 0 이상의 정수를 넣으면 고정되지만, 값이 바뀌면 추출되는 것도 바뀐다
+# - 비워두면 비고정, 음수 혹은 소수점 아래를 넣으면 에러
 # - %timeit np.sum(원하는 변수): 그 변수를 계산하는데 걸린 시간을 알 수 있다
 
 # ## 2. 2. 4. 행렬
@@ -300,8 +328,14 @@ attri_data_frame_index2.Birth_year.sort_values()
 # 값이 있는지 확인
 attri_data_frame_index2.isin(['Seoul'])
 
+# 값이 있는지 확인
+attri_data_frame_index2.isin([101])
+
+help(DataFrame.isin)
+
 # 결측값 처리 방법
 # name을 모두 nan으로 변경
+# ***np.nan***
 attri_data_frame_index2['Name'] = np.nan
 attri_data_frame_index2.isnull()
 
@@ -595,11 +629,11 @@ for i in range(0, 10000):
         x_out.append(x[i])
         y_out.append(y[i])        
 
-
+plt.figure(figsize = (5, 5))
 plt.scatter(x_in, y_in, color = 'green')
 plt.scatter(x_out, y_out, color = 'blue')
 
-x_cir = np.arange(0, 1, 0.001)
+x_cir = np.arange(0, 1.001, 0.001)
 y_cir = np.sqrt(1-x_cir**2)
 plt.plot(x_cir, y_cir, color = 'red')
 
